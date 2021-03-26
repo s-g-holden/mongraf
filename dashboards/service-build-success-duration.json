@@ -1,0 +1,192 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "iteration": 1616520460636,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 22,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "queueTimeInSeconds (max)"
+          }
+        ]
+      },
+      "pluginVersion": "7.4.5",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "refId": "A",
+          "spreadsheet": "$Service"
+        }
+      ],
+      "title": "$Service",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "Successful"
+                  }
+                },
+                "fieldName": "buildState"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "buildCompletedTime": true,
+              "buildDurationDescription": true,
+              "buildResultKey": true,
+              "buildStartedTime": true,
+              "buildState": true,
+              "failedTestCount": true,
+              "skippedTestCount": true,
+              "successfulTestCount": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "buildDurationInSeconds": {
+                "aggregations": ["min", "max", "mean"],
+                "operation": "aggregate"
+              },
+              "planName": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "queueTimeInSeconds": {
+                "aggregations": ["min", "max", "mean"],
+                "operation": "aggregate"
+              }
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "OM",
+          "value": "1mHxRHq8mPBnWCZN3asNepj632xCATOAkhEP9mWuS7hs"
+        },
+        "description": "Service Name",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Service",
+        "multi": false,
+        "name": "Service",
+        "options": [
+          {
+            "selected": false,
+            "text": "AM",
+            "value": "1dfjNw9jWvEIRtlgJpsWuwRpP3oK5TnTE4C0C1k-I-tE"
+          },
+          {
+            "selected": true,
+            "text": "OM",
+            "value": "1mHxRHq8mPBnWCZN3asNepj632xCATOAkhEP9mWuS7hs"
+          },
+          {
+            "selected": false,
+            "text": "UI",
+            "value": "1-Ioc_kUBmemBYfJFtGCiKnqKCMm3rn986v_Fa2FnLts"
+          },
+          {
+            "selected": false,
+            "text": "ADM",
+            "value": "1MV0ZZz7MTDkHRrOoVzHf5ZK-d0qgmNK2KsowuJOrCdY"
+          }
+        ],
+        "query": "AM : 1dfjNw9jWvEIRtlgJpsWuwRpP3oK5TnTE4C0C1k-I-tE, OM : 1mHxRHq8mPBnWCZN3asNepj632xCATOAkhEP9mWuS7hs, UI : 1-Ioc_kUBmemBYfJFtGCiKnqKCMm3rn986v_Fa2FnLts, ADM : 1MV0ZZz7MTDkHRrOoVzHf5ZK-d0qgmNK2KsowuJOrCdY",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Successful Service Build Durations",
+  "uid": "9PPFLxwMz",
+  "version": 5
+}
