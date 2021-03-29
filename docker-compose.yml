@@ -4,7 +4,7 @@ services:
     image: atlassian/bamboo-server
     restart: unless-stopped
     volumes:
-      - bamboo_data:/var/atlassian/application-data/bamboo
+      - ./bamboo/data:/var/atlassian/application-data/bamboo
     ports:
       - 54663:54663
       - 8085:8085
@@ -15,7 +15,7 @@ services:
       - prometheus:prometheus
       - mongodb:mongodb
     volumes:
-      - ./data/grafana:/var/lib/grafana
+      - ./grafana/data/grafana:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=password
       - GF_INSTALL_PLUGINS=grafana-googlesheets-datasource
@@ -44,10 +44,12 @@ services:
     volumes:
       - mongodb_data:/data/db
   expyter:
-    build: ./expyter
+    build:
+      context: ./expyter
+      dockerfile: docker/Dockerfile
     image: expyter
     env_file:
-     - ./bamboo.env
+     - ./expyter/docker/dev.env
     links:
       - bamboo:bamboo
     expose:
@@ -56,4 +58,3 @@ services:
       - 8000:8000
 volumes:
   mongodb_data:
-  bamboo_data:
