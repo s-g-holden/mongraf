@@ -1,0 +1,7 @@
+csvs
+.vscode
+.metals
+user*.json
+*.zip
+.ipynb_checkpoints
+*.ipynb
