@@ -6,6 +6,13 @@ import json
 import csv
 import math
 
+class BearerAuth(requests.auth.AuthBase):
+    def __init__(self, token):
+        self.token = token
+    def __call__(self, r):
+        r.headers["authorization"] = "Bearer " + self.token
+        return r
+
 def convert_to_csv(plan_key, csv_name, keys, list_to_convert):
     with open('csvs/' + plan_key + '_' + csv_name, 'w', newline='')  as output_file:
         dict_writer = csv.DictWriter(output_file, fieldnames=keys, extrasaction='ignore')
@@ -15,6 +22,8 @@ def convert_to_csv(plan_key, csv_name, keys, list_to_convert):
 def get_auth():
     with open('user-tfs.json') as user_file:
         user_info = json.load(user_file)
+        if 'PAT' in user_info:
+            return BearerAuth(user_info['PAT'])
         return HTTPBasicAuth(user_info['username'], user_info['password'])
 
 def send_request(url, auth):
